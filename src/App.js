@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import toast from 'react-hot-toast';
 
 function App() {
+  toast.success("Test");
   return (
     <div className="App">
       <header className="App-header">
