@@ -5,17 +5,19 @@ import { Home } from './home/home';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Toaster } from 'react-hot-toast'
 import './utils/firebase';
 import { Login } from './userAuth/login';
+import { Signup } from './userAuth/signup';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
 <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} >
         <Route path="/" element={<Home />} />  
-        <Route path="/login" element={<Login />} />"     
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
     </Routes>
   </BrowserRouter>

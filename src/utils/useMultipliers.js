@@ -1,13 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
 import { doc, addDoc, collection, onSnapshot, setDoc, getFirestore } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const useMultipliers = () => {
   const [multipliers, setMultipliers] = useState([]);
   const multipliersRef = useRef([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
+
+
+  useEffect(() => {
+    if (!user) return;
     const db = getFirestore();
-    const unsubscribe = onSnapshot(collection(db, 'multipliers'), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, `multipliers/${user.uid}/multipliers`), (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
           multipliersRef.current.push({ id: change.doc.id, ...change.doc.data() });
@@ -20,48 +31,42 @@ export const useMultipliers = () => {
       });
       setMultipliers([...multipliersRef.current]);
     });
-
     return unsubscribe;
   }, []);
 
 
-  const updateMultiplier = (multiplier, amount) => {
+  const updateMultiplier = (multiplier, amount, userId) => {
     const db = getFirestore();
-      setDoc(doc(db, "multipliers", multiplier.id), {
+      setDoc(doc(db, `multipliers/${userId}/multipliers`, multiplier.id), {
         numberOwned : multiplier.numberOwned + amount,
       }, { merge : true });
   }
 
-  const initMultipliers = async () => {
+  const initMultipliers = async (userId) => {
     const db = getFirestore();
-    await addDoc(collection(db, "multipliers"), {
+    await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "A Little Xtra",
       numberOwned: 0,
       multiplier: 10,
-      userId: 'me',
     });
 
-    await addDoc(collection(db, "multipliers"), {
-      title: "Xtra Xtra",
-      numberOwned: 0,
-      multiplier: 50,
-      userId: 'me',
-    });
+    // await addDoc(collection(db, `multipliers/${userId}`), {
+    //   title: "Xtra Xtra",
+    //   numberOwned: 0,
+    //   multiplier: 50,
+    // });
 
-    await addDoc(collection(db, "multipliers"), {
-      title: "Xactly What I Needed",
-      numberOwned: 0,
-      multiplier: 100,
-      userId: 'me',
-    });
+    // await addDoc(collection(db, `multipliers/${userId}`), {
+    //   title: "Xactly What I Needed",
+    //   numberOwned: 0,
+    //   multiplier: 100,
+    // });
 
-    await addDoc(collection(db, "multipliers"), {
-      title: "Moving Xtra Fast",
-      numberOwned: 0,
-      multiplier: 500,
-      userId: 'me',
-    });
+    // await addDoc(collection(db, `multipliers/${userId}`), {
+    //   title: "Moving Xtra Fast",
+    //   numberOwned: 0,
+    //   multiplier: 500,
+    // });
   }
-
   return [multipliers, updateMultiplier, initMultipliers];
 }
