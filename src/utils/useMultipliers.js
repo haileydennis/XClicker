@@ -6,7 +6,7 @@ export const useMultipliers = () => {
   const [multipliers, setMultipliers] = useState([]);
   const multipliersRef = useRef([]);
   const [user, setUser] = useState(null);
-
+  
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -32,7 +32,7 @@ export const useMultipliers = () => {
       setMultipliers([...multipliersRef.current]);
     });
     return unsubscribe;
-  }, []);
+  }, [user]);
 
 
   const updateMultiplier = (multiplier, amount, userId) => {
@@ -50,23 +50,23 @@ export const useMultipliers = () => {
       multiplier: 10,
     });
 
-    // await addDoc(collection(db, `multipliers/${userId}`), {
-    //   title: "Xtra Xtra",
-    //   numberOwned: 0,
-    //   multiplier: 50,
-    // });
+    await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
+      title: "Xtra Xtra",
+      numberOwned: 0,
+      multiplier: 50,
+    });
 
-    // await addDoc(collection(db, `multipliers/${userId}`), {
-    //   title: "Xactly What I Needed",
-    //   numberOwned: 0,
-    //   multiplier: 100,
-    // });
+    await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
+      title: "Xactly What I Needed",
+      numberOwned: 0,
+      multiplier: 100,
+    });
 
-    // await addDoc(collection(db, `multipliers/${userId}`), {
-    //   title: "Moving Xtra Fast",
-    //   numberOwned: 0,
-    //   multiplier: 500,
-    // });
+    await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
+      title: "Moving Xtra Fast",
+      numberOwned: 0,
+      multiplier: 500,
+    });
   }
   return [multipliers, updateMultiplier, initMultipliers];
 }
