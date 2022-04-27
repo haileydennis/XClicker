@@ -1,8 +1,9 @@
 /* eslint-disable eqeqeq */
 import { useState, useEffect } from 'react';
-import { useMoney } from '../utils/useMoney';
-import { useMultipliers } from '../utils/useMultipliers';
+import { useMoney } from '../../utils/useMoney';
+import { useMultipliers } from '../../utils/useMultipliers';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { RandomEvents } from './randomEvents';
 
 export const Game = () => {
   const [userMoney, setUserMoney] = useState(null);
@@ -27,9 +28,7 @@ export const Game = () => {
   }, []);
 
   useEffect(() => {
-    console.log(multipliers);
     if (user && multipliers.length !== 0) {
-      console.log(multipliers);
       let currUserMultiplier = 0;
       multipliers.forEach(m => {
         currUserMultiplier += m.multiplier * m.numberOwned;
@@ -44,6 +43,18 @@ export const Game = () => {
     }
   }, [multipliers, user]);
 
+  // const idleMoney = () => {
+  //   if (user) {
+  //     console.log('idle');
+  //   updateMoney(userMoney, userMultiplier, user.uid);
+  //   } 
+  // }
+
+  // useEffect(() => {
+  //   const interval = setInterval(idleMoney, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
   const formatMoney = (amount) => {
     if (amount < 1000000) {
       return amount;
@@ -57,13 +68,15 @@ export const Game = () => {
     if (amount < 1000000000000000) {
       return (amount / 1000000000000).toFixed(2) + 'T';
     }
-    if (amount < 1000000000000000000n) {
+    if (amount < 1000000000000000000) {
       return (amount / 1000000000000000).toFixed(2) + 'Q';
     }
-    if (amount < 1000000000000000000000n) {
-      return (amount / 1000000000000000000n).toFixed(2) + 'QQ';
+    if (amount < 1000000000000000000000) {
+      return (amount / 1000000000000000000).toFixed(2) + 'QQ';
     }
-    return (amount / 1000000000000000000000n).toFixed(2) + 'QQQ';
+    else {
+      return (amount / 1000000000000000000000).toFixed(2) + 'QQQ';
+    }
   }
 
 
@@ -81,9 +94,11 @@ export const Game = () => {
       <><div className='score-holder'>
           <div className='score-n-btn'>
             <h1 className="score">${formatMoney(userMoney.amount)} </h1>
-            <button className="main-btn" onClick={() => { updateMoney(userMoney, userMultiplier, user.uid); } }>X</button>
+            <button className="main-btn" onClick={() => updateMoney(userMoney, userMultiplier, user.uid)}>X</button>
           </div>
-        </div></> : null}
+        </div>
+        <RandomEvents userMoney={userMoney} updateMoney={updateMoney} userMultiplier={userMultiplier} user={user}></RandomEvents></>
+         : null}
     </div>
   );
 

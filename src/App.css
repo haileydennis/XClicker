@@ -88,6 +88,10 @@
     margin-bottom: 10%;
 }
 
+.main-btn:hover {
+  background-color: #bababa;
+}
+
 .login {
   display: flex;
   flex-direction: column;
@@ -166,8 +170,7 @@ a:hover {
 .modal {
   background-color: #fff;
   border-radius: 15px;
-  width: 500px;
-  margin-bottom: 20%;
+  width: 400px;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -184,6 +187,7 @@ a:hover {
   margin-bottom: 10px;
   border-radius: 10px;
   box-shadow: inset 0 0 1px #000;
+  margin-top: 10px;
 }
 
 .close-btn button {
@@ -196,4 +200,76 @@ a:hover {
   font-family: monospace;
   color: white;
   height: 30px;
+}
+
+.close-btn button:hover {
+  background-color: #bababa;
+  transition-duration: .2s;
+  color: #000;
+}
+
+.multiplier-container { 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color:#bababa;
+  width: 300px;
+  margin-bottom: 5%;
+  border:rgb(0, 0, 0) 1px solid;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.multiplier-container span {
+  margin-left: 10px;
+}
+
+.multiplier-title {
+  font-family: monospace;
+  margin-bottom: 10%;
+  font-weight: bold;
+  
+}
+
+.buy-sell-container {
+  display: flex;
+  margin-left: 10px;
+}
+
+.buy-sell-container button {
+  margin-right: 5px;
+}
+
+.shop-inputs {
+  width: 50%;
+  margin-right: 10px;
+}
+
+.events-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 40vh;
+}
+
+.events-container h1 {
+  font-weight: lighter;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border:rgb(0, 0, 0) 1px solid;
+  padding-bottom: 10px;
+  overflow-y: scroll;
+  background: white;
+  height: 100%;
+}
+
+.event-div {
+  display: flex;
+  flex-direction: column;
 }

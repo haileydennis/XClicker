@@ -18,7 +18,7 @@ export const Home = () => {
     <>
       {
         user ?
-          <Game />
+          <Game user={user}/>
           :
           <Login />
       }

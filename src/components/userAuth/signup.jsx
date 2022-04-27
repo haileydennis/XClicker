@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useMoney } from '../utils/useMoney';
-import { useMultipliers } from '../utils/useMultipliers';
+import { useMoney } from '../../utils/useMoney';
+import { useMultipliers } from '../../utils/useMultipliers';
 
 export const Signup = () => {
   const [email, setEmail] = useState('');
