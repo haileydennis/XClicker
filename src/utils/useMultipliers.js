@@ -47,36 +47,41 @@ export const useMultipliers = () => {
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "A Little Xtra",
       numberOwned: 0,
-      multiplier: 10,
-      cost: 20,
+      multiplier: 1,
+      cost: 500,
+      max: 100,
     });
 
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "Xtra Xtra",
       numberOwned: 0,
-      multiplier: 50,
-      cost: 1000,
+      multiplier: 25,
+      cost: 3000,
+      max: 50,
     });
 
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "Xactly What I Needed",
       numberOwned: 0,
-      multiplier: 100,
-      cost: 50000,
+      multiplier: 500,
+      cost: 140000,
+      max: 25,
     });
 
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "Moving Xtra Fast",
       numberOwned: 0,
-      multiplier: 500,
-      cost: 100000,
+      multiplier: 5000,
+      cost: 10000000,
+      max: 10,
     });
 
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "XXX",
       numberOwned: 0,
-      multiplier: 1000,
-      cost: 300000,
+      multiplier: 100000,
+      cost: 1000000000,
+      max: 5,
     });
   }
   return [multipliers, updateMultiplier, initMultipliers];

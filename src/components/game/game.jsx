@@ -29,31 +29,14 @@ export const Game = () => {
 
   useEffect(() => {
     if (user && multipliers.length !== 0) {
-      let currUserMultiplier = 0;
+      let currUserMultiplier = 1;
       multipliers.forEach(m => {
         currUserMultiplier += m.multiplier * m.numberOwned;
       });
-  
-      if (currUserMultiplier == 0) {
-        currUserMultiplier = 1;
-      }
-  
       setUserMultiplier(currUserMultiplier);
       setLoadingMultipliers(false);
     }
   }, [multipliers, user]);
-
-  // const idleMoney = () => {
-  //   if (user) {
-  //     console.log('idle');
-  //   updateMoney(userMoney, userMultiplier, user.uid);
-  //   } 
-  // }
-
-  // useEffect(() => {
-  //   const interval = setInterval(idleMoney, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const formatMoney = (amount) => {
     if (amount < 1000000) {
@@ -97,7 +80,7 @@ export const Game = () => {
             <button className="main-btn" onClick={() => updateMoney(userMoney, userMultiplier, user.uid)}>X</button>
           </div>
         </div>
-        <RandomEvents userMoney={userMoney} updateMoney={updateMoney} userMultiplier={userMultiplier} user={user}></RandomEvents></>
+        <RandomEvents userMoney={userMoney} updateMoney={updateMoney} userMultiplier={userMultiplier} user={user} formatMoney={formatMoney}></RandomEvents></>
          : null}
     </div>
   );

@@ -71,12 +71,6 @@
   width: 100%;
 }
 
-.test {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .main-btn {
     display: flex;
     justify-content: center;
@@ -170,7 +164,7 @@ a:hover {
 .modal {
   background-color: #fff;
   border-radius: 15px;
-  width: 400px;
+  width: 500px;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -213,7 +207,7 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   background-color:#bababa;
-  width: 300px;
+  width: 400px;
   margin-bottom: 5%;
   border:rgb(0, 0, 0) 1px solid;
   padding-bottom: 5px;
@@ -246,12 +240,13 @@ a:hover {
 }
 
 .events-container {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 40vh;
+  z-index: -1;
 }
 
 .events-container h1 {
@@ -267,6 +262,7 @@ a:hover {
   overflow-y: scroll;
   background: white;
   height: 100%;
+  margin-bottom: 50px;
 }
 
 .event-div {

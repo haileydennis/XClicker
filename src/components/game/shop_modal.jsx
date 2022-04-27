@@ -8,6 +8,8 @@ export const ShopModal = ({closeModal, user}) => {
   const [cart, setCart] = useState([]);
   const [error, setError] = useState('');
   const [userMoney, setUserMoney] = useState(null);
+  const [loadingMultipliers, setLoadingMultipliers] = useState(true);
+  const [userMultiplier, setUserMultiplier] = useState(1);
 
   useEffect (() => {
     let newCart = [];
@@ -20,6 +22,16 @@ export const ShopModal = ({closeModal, user}) => {
       );
     });
     setCart(newCart);
+
+    if (user) {
+      let currUserMultiplier = 1;
+      multipliers.forEach(m => {
+        currUserMultiplier += m.multiplier * m.numberOwned;
+      });
+      setUserMultiplier(currUserMultiplier);
+      setLoadingMultipliers(false);
+    }
+
   }, [multipliers]);
 
   useEffect (() => {
@@ -40,12 +52,17 @@ export const ShopModal = ({closeModal, user}) => {
 
   const handleBuy = (multiplier) => {
     const item = cart.find(m => m.multiplier === multiplier);
+
+    if ((item.numberInCart + multiplier.numberOwned) > multiplier.max) {
+      setError(`Max item number exceeded. You may only buy ${multiplier.max - multiplier.numberOwned} of these.`);
+      return;
+    }
     if (item.numberInCart < 0) {
       setError(`You can't buy a negative number of items.`);
       return;
     }
     if (item.numberInCart * multiplier.cost > userMoney.amount) {
-      setError(`You don't have enough money to buy that many items.`);
+      setError(`Insufficient funds. You can afford ${Math.floor(userMoney.amount / multiplier.cost)} of these.`);
       return;
     }
     else {
@@ -65,7 +82,6 @@ export const ShopModal = ({closeModal, user}) => {
 
   const handleSell = (multiplier) => {
     const item = cart.find(m => m.multiplier === multiplier);
-    console.log(item);
     if (item.numberInCart < 0) {
       setError(`You can't sell a negative number of items.`);
       return;
@@ -96,6 +112,29 @@ export const ShopModal = ({closeModal, user}) => {
     setCart([...newCart]);
   }
 
+  const formatNumber = (amount) => {
+    if (amount < 1000000) {
+      return amount;
+    }
+    if (amount < 1000000000) {
+      return (amount / 1000000).toFixed(2) + 'M';
+    }
+    if (amount < 1000000000000) {
+      return (amount / 1000000000).toFixed(2) + 'B';
+    }
+    if (amount < 1000000000000000) {
+      return (amount / 1000000000000).toFixed(2) + 'T';
+    }
+    if (amount < 1000000000000000000) {
+      return (amount / 1000000000000000).toFixed(2) + 'Q';
+    }
+    if (amount < 1000000000000000000000) {
+      return (amount / 1000000000000000000).toFixed(2) + 'QQ';
+    }
+    else {
+      return (amount / 1000000000000000000000).toFixed(2) + 'QQQ';
+    }
+  }
 
   return (
     <>
@@ -103,20 +142,23 @@ export const ShopModal = ({closeModal, user}) => {
       <div className="modal-container">
         <div className="modal">
           <h1> Upgrade Your Clicks! </h1>
-          <div className='test'>
+          {userMoney &&
+          <h3> Your Money: ${userMoney.amount} |&nbsp;Your Power: {userMultiplier}</h3>}
+          <div>
             {multipliers.sort(compare).map((multiplier) => (
               <div key={multiplier.id} className="multiplier-container">
                 <div>
                   <span className='multiplier-title'>{multiplier.title}</span>
                   <div>
-                    <span>Owned: {multiplier.numberOwned} |&nbsp;Power: x{multiplier.multiplier} |&nbsp;Cost: {multiplier.cost}</span>
+                    <span>Owned: {multiplier.numberOwned} |&nbsp;Power: +{formatNumber(multiplier.multiplier)} |&nbsp;Cost: {formatNumber(multiplier.cost)} |&nbsp;Max: {multiplier.max}</span>
                   </div>
                 </div>
                 <br></br>
                 <div className="buy-sell-container">
-                <input className="shop-inputs" type="number" id={multiplier.id} min={0} onChange={(e) => updateCart(multiplier, e.target.value)} placeholder="Amount" />
-                    <button onClick={() => handleBuy(multiplier)}>Buy</button>
-                    <button onClick={() => handleSell(multiplier)}>Sell</button>
+                {multiplier.numberOwned !== multiplier.max || multiplier.numberOwned > multiplier.max ?
+                <><input className="shop-inputs" type="number" id={multiplier.id} min={0} onChange={(e) => updateCart(multiplier, e.target.value)} placeholder="Amount" /><button onClick={() => handleBuy(multiplier)}>Buy</button><button onClick={() => handleSell(multiplier)}>Sell</button></>
+                : 
+                <span>Maxed Out!</span>}
                 </div>
               </div>
             ))}
