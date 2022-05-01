@@ -61,6 +61,7 @@
 
 .menu-item:hover {
   box-shadow: inset 0 0 5px #000;
+  cursor: pointer;
 }
 
 #bottom-menu-item {
@@ -83,6 +84,7 @@
 
 .main-btn:hover {
   background-color: #bababa;
+  cursor: pointer;
 }
 
 .login {
@@ -126,6 +128,7 @@
   color: #fff;
   background-color: #5c5c5c;
   transition-duration: .5s;
+  cursor: pointer;
 }
 
 .error-msg {
@@ -138,6 +141,7 @@ a {
 
 a:hover {
   color: #5c5c5c;
+  cursor: pointer;
 }
 
 .overlay {
@@ -199,6 +203,7 @@ a:hover {
   background-color: #bababa;
   transition-duration: .2s;
   color: #000;
+  cursor: pointer;
 }
 
 .multiplier-container { 
@@ -267,4 +272,26 @@ a:hover {
 .event-div {
   display: flex;
   flex-direction: column;
+}
+
+.chaos {
+  top: 0;
+  right: 0;
+  position: fixed;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.here {
+  text-decoration: underline;
+}
+
+.here:hover {
+  color: #5c5c5c;
+  cursor: pointer;
+}
+
+button:hover {
+  cursor: pointer;
 }

@@ -9,6 +9,7 @@ export const RandomEvents = ({userMultiplier, user, formatMoney}) => {
   const [userMoney, setUserMoney] = useState(null);
   const [loadingMoney, setLoadingMoney] = useState(true);
   const [money, updateMoney] = useMoney();
+  
 
   useEffect(() => {
     setUserMoney(money[0]);
@@ -17,7 +18,6 @@ export const RandomEvents = ({userMultiplier, user, formatMoney}) => {
 
   const generateEvent = () => {
     const randomNum = Math.floor(Math.random() * 10);
-    console.log(randomNum);
     if (randomNum === 4) {
       const loseOrWin = Math.floor(Math.random() * 4);
       const amount = Math.floor(Math.random() * 1000) * userMultiplier;
@@ -47,7 +47,7 @@ export const RandomEvents = ({userMultiplier, user, formatMoney}) => {
 
   useEffect(() => {
     if (!loadingMoney) {    
-      const interval = setInterval(generateEvent, 10000);
+      const interval = setInterval(generateEvent, 5000);
       return () => clearInterval(interval);
     }
   }, []);

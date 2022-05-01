@@ -29,7 +29,6 @@ const handleOpen = () => {
 
 const handleClose = () => {
   setIsOpen(false);
-  console.log(isOpen);
 }
 
 return (
@@ -37,17 +36,17 @@ return (
     <div className="menu-item">
       <p>XClicker</p>
     </div>
-     {user && 
-     <div onClick={handleOpen} className="menu-item">
-      <p>Open Shop</p>
-    </div>}
+    {user && 
+      <div onClick={handleOpen} className="menu-item">
+        <p>Open Shop</p>
+      </div>}
     {isOpen && user &&
       <ShopModal closeModal={handleClose} openModal={handleOpen} user={user}></ShopModal>
     }
     {user &&
-    <div onClick={handleLogout} className="menu-item" id="bottom-menu-item">
-      <p>Logout</p>
-    </div>}
+      <div onClick={handleLogout} className="menu-item" id="bottom-menu-item">
+        <p>Logout</p>
+      </div>}
   </div>
   );
 }

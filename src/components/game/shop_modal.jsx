@@ -3,12 +3,11 @@ import { useMoney } from '../../utils/useMoney';
 import { useEffect, useState } from 'react';
 
 export const ShopModal = ({openModal, closeModal, user}) => {
-  const [multipliers, updateMultiplier, initMultipliers] = useMultipliers();
-  const [money, updateMoney, initMoney] = useMoney();
+  const [multipliers, updateMultiplier] = useMultipliers();
+  const [money, updateMoney] = useMoney();
   const [cart, setCart] = useState([]);
   const [error, setError] = useState('');
   const [userMoney, setUserMoney] = useState(null);
-  const [loadingMultipliers, setLoadingMultipliers] = useState(true);
   const [userMultiplier, setUserMultiplier] = useState(1);
 
   useEffect (() => {
@@ -29,7 +28,6 @@ export const ShopModal = ({openModal, closeModal, user}) => {
         currUserMultiplier += m.multiplier * m.numberOwned;
       });
       setUserMultiplier(currUserMultiplier);
-      setLoadingMultipliers(false);
     }
 
   }, [multipliers]);

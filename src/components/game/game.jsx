@@ -1,10 +1,9 @@
 /* eslint-disable eqeqeq */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import { useMoney } from '../../utils/useMoney';
 import { useMultipliers } from '../../utils/useMultipliers';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { RandomEvents } from './randomEvents';
-import toast from 'react-hot-toast';
 
 export const Game = () => {
   const [userMoney, setUserMoney] = useState(null);
@@ -14,6 +13,7 @@ export const Game = () => {
   const [multipliers] = useMultipliers();
   const [loadingMultipliers, setLoadingMultipliers] = useState(true);
   const [userMultiplier, setUserMultiplier] = useState(0);
+  const [chaoticMode, setChaoticMode] = useState(false);
 
 
   useEffect(() => {
@@ -63,6 +63,10 @@ export const Game = () => {
     }
   }
 
+  const toggleChaos = () => {
+    setChaoticMode(!chaoticMode);
+  }
+
 
   if (loadingMoney || !user || loadingMultipliers) {
     return <div className="loading">
@@ -81,8 +85,13 @@ export const Game = () => {
             <button className="main-btn" onClick={() => updateMoney(userMoney, userMultiplier, user.uid)}>X</button>
           </div>
         </div>
-        <RandomEvents userMultiplier={userMultiplier} user={user} formatMoney={formatMoney}></RandomEvents></>
-         : null}
+        {!chaoticMode && <span className='chaos'> Click
+          <span> </span>
+          <span className='here' onClick={toggleChaos}>here</span> to try chaotic (broken) random events mode! </span> }
+        {chaoticMode && <><RandomEvents userMultiplier={userMultiplier} user={user} formatMoney={formatMoney} />
+        <span className='chaos'> Click
+        <span> </span>
+        <span className='here' onClick={toggleChaos}>here</span> to turn off chaotic (broken) random events mode! </span></> }</> : null}
     </div>
   );
 
