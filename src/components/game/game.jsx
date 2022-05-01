@@ -88,7 +88,7 @@ export const Game = () => {
         {!chaoticMode && <span className='chaos'> Click
           <span> </span>
           <span className='here' onClick={toggleChaos}>here</span> to try chaotic (broken) random events mode! </span> }
-        {chaoticMode && <><RandomEvents userMultiplier={userMultiplier} user={user} formatMoney={formatMoney} />
+        {chaoticMode && <><RandomEvents userMultiplier={userMultiplier} userMoney={userMoney} user={user} formatMoney={formatMoney} />
         <span className='chaos'> Click
         <span> </span>
         <span className='here' onClick={toggleChaos}>here</span> to turn off chaotic (broken) random events mode! </span></> }</> : null}

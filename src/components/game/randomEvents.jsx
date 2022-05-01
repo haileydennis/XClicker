@@ -2,22 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { useEvents } from "../../utils/useEvents";
 import { useMoney } from "../../utils/useMoney";
 
-export const RandomEvents = ({userMultiplier, user, formatMoney}) => {
+export const RandomEvents = ({userMultiplier, userMoney, user, formatMoney}) => {
   const [events, setEvents] = useState([]);
   const eventsRef =  useRef(events);
   const [getWinEvent, getLoseEvent] = useEvents();
-  const [userMoney, setUserMoney] = useState(null);
-  const [loadingMoney, setLoadingMoney] = useState(true);
   const [money, updateMoney] = useMoney();
-  
-
-  useEffect(() => {
-    setUserMoney(money[0]);
-    setLoadingMoney(false);
-  }, [money]);
 
   const generateEvent = () => {
     const randomNum = Math.floor(Math.random() * 10);
+    console.log(randomNum);
     if (randomNum === 4) {
       const loseOrWin = Math.floor(Math.random() * 4);
       const amount = Math.floor(Math.random() * 1000) * userMultiplier;
@@ -45,11 +38,9 @@ export const RandomEvents = ({userMultiplier, user, formatMoney}) => {
     }
   }
 
-  useEffect(() => {
-    if (!loadingMoney) {    
+  useEffect(() => { 
       const interval = setInterval(generateEvent, 5000);
       return () => clearInterval(interval);
-    }
   }, []);
 
   return (
