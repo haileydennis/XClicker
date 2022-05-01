@@ -79,7 +79,7 @@ export const Game = () => {
   return (
     <div>
       {userMoney ? 
-      <><div className='score-holder'>
+      <><div className={chaoticMode ? 'score-holder-chaos' : 'score-holder'}>
           <div className='score-n-btn'>
             <h1 className="score">${formatMoney(userMoney.amount)} </h1>
             <button className="main-btn" onClick={() => updateMoney(userMoney, userMultiplier, user.uid)}>X</button>
