@@ -141,7 +141,7 @@ export const ShopModal = ({openModal, closeModal, user}) => {
           <div className="modal" onClick={(event) => event.stopPropagation()}>
             <h1> Upgrade Your Clicks! </h1>
             {userMoney &&
-            <h3> Your Money: ${userMoney.amount} |&nbsp;Your Power: {userMultiplier}</h3>}
+            <h3> Your Money: ${formatNumber(userMoney.amount)} |&nbsp;Your Power: {formatNumber(userMultiplier)}</h3>}
             <div>
               {multipliers.sort(compare).map((multiplier) => (
                 <div key={multiplier.id} className="multiplier-container">

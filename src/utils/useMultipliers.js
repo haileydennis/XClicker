@@ -79,7 +79,7 @@ export const useMultipliers = () => {
     await addDoc(collection(db, `multipliers/${userId}/multipliers`), {
       title: "XXX",
       numberOwned: 0,
-      multiplier: 100000,
+      multiplier: 1000000,
       cost: 1000000000,
       max: 5,
     });
