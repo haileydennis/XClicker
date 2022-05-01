@@ -48,7 +48,7 @@ export const useMultipliers = () => {
       title: "A Little Xtra",
       numberOwned: 0,
       multiplier: 1,
-      cost: 500,
+      cost: 200,
       max: 100,
     });
 

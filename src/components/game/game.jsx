@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useMoney } from '../../utils/useMoney';
 import { useMultipliers } from '../../utils/useMultipliers';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { RandomEvents } from './randomEvents';
+import toast from 'react-hot-toast';
 
 export const Game = () => {
   const [userMoney, setUserMoney] = useState(null);
@@ -80,7 +81,7 @@ export const Game = () => {
             <button className="main-btn" onClick={() => updateMoney(userMoney, userMultiplier, user.uid)}>X</button>
           </div>
         </div>
-        <RandomEvents userMoney={userMoney} updateMoney={updateMoney} userMultiplier={userMultiplier} user={user} formatMoney={formatMoney}></RandomEvents></>
+        <RandomEvents userMultiplier={userMultiplier} user={user} formatMoney={formatMoney}></RandomEvents></>
          : null}
     </div>
   );

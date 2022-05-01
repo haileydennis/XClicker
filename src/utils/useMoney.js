@@ -35,9 +35,9 @@ export const useMoney = () => {
   }, [user]);
 
 
-  const updateMoney = (money, dollar, userId) => {
+  const updateMoney = async (money, dollar, userId) => {
     const db = getFirestore();
-      setDoc(doc(db, `money/${userId}/money`, money.id), {
+      await setDoc(doc(db, `money/${userId}/money`, money.id), {
         amount : money.amount + dollar,
       }, { merge : true });
   }

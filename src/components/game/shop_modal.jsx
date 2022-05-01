@@ -2,7 +2,7 @@ import { useMultipliers } from '../../utils/useMultipliers';
 import { useMoney } from '../../utils/useMoney';
 import { useEffect, useState } from 'react';
 
-export const ShopModal = ({closeModal, user}) => {
+export const ShopModal = ({openModal, closeModal, user}) => {
   const [multipliers, updateMultiplier, initMultipliers] = useMultipliers();
   const [money, updateMoney, initMoney] = useMoney();
   const [cart, setCart] = useState([]);
@@ -138,34 +138,35 @@ export const ShopModal = ({closeModal, user}) => {
 
   return (
     <>
-      <div onClick={closeModal} className="overlay"/>
-      <div className="modal-container">
-        <div className="modal">
-          <h1> Upgrade Your Clicks! </h1>
-          {userMoney &&
-          <h3> Your Money: ${userMoney.amount} |&nbsp;Your Power: {userMultiplier}</h3>}
-          <div>
-            {multipliers.sort(compare).map((multiplier) => (
-              <div key={multiplier.id} className="multiplier-container">
-                <div>
-                  <span className='multiplier-title'>{multiplier.title}</span>
+      <div onClick={closeModal} className="overlay">
+        <div className="modal-container">
+          <div className="modal" onClick={(event) => event.stopPropagation()}>
+            <h1> Upgrade Your Clicks! </h1>
+            {userMoney &&
+            <h3> Your Money: ${userMoney.amount} |&nbsp;Your Power: {userMultiplier}</h3>}
+            <div>
+              {multipliers.sort(compare).map((multiplier) => (
+                <div key={multiplier.id} className="multiplier-container">
                   <div>
-                    <span>Owned: {multiplier.numberOwned} |&nbsp;Power: +{formatNumber(multiplier.multiplier)} |&nbsp;Cost: {formatNumber(multiplier.cost)} |&nbsp;Max: {multiplier.max}</span>
+                    <span className='multiplier-title'>{multiplier.title}</span>
+                    <div>
+                      <span>Owned: {multiplier.numberOwned} |&nbsp;Power: +{formatNumber(multiplier.multiplier)} |&nbsp;Cost: {formatNumber(multiplier.cost)} |&nbsp;Max: {multiplier.max}</span>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="buy-sell-container">
+                  {multiplier.numberOwned !== multiplier.max || multiplier.numberOwned > multiplier.max ?
+                  <><input className="shop-inputs" type="number" id={multiplier.id} min={0} onChange={(e) => updateCart(multiplier, e.target.value)} placeholder="Amount" /><button onClick={() => handleBuy(multiplier)}>Buy</button><button onClick={() => handleSell(multiplier)}>Sell</button></>
+                  : 
+                  <span>Maxed Out!</span>}
                   </div>
                 </div>
-                <br></br>
-                <div className="buy-sell-container">
-                {multiplier.numberOwned !== multiplier.max || multiplier.numberOwned > multiplier.max ?
-                <><input className="shop-inputs" type="number" id={multiplier.id} min={0} onChange={(e) => updateCart(multiplier, e.target.value)} placeholder="Amount" /><button onClick={() => handleBuy(multiplier)}>Buy</button><button onClick={() => handleSell(multiplier)}>Sell</button></>
-                : 
-                <span>Maxed Out!</span>}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="error-msg"> {error} </div>
-          <div className="close-btn">
-            <button onClick={closeModal}>Close Shop</button>
+              ))}
+            </div>
+            <div className="error-msg"> {error} </div>
+            <div className="close-btn">
+              <button onClick={closeModal}>Close Shop</button>
+            </div>
           </div>
         </div>
       </div>

@@ -24,7 +24,12 @@ const handleLogout = () => {
 }
 
 const handleOpen = () => {
-  setIsOpen(!isOpen);
+  setIsOpen(true);
+}
+
+const handleClose = () => {
+  setIsOpen(false);
+  console.log(isOpen);
 }
 
 return (
@@ -37,7 +42,7 @@ return (
       <p>Open Shop</p>
     </div>}
     {isOpen && user &&
-      <ShopModal closeModal={handleOpen} user={user}></ShopModal>
+      <ShopModal closeModal={handleClose} openModal={handleOpen} user={user}></ShopModal>
     }
     {user &&
     <div onClick={handleLogout} className="menu-item" id="bottom-menu-item">
