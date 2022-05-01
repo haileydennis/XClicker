@@ -10,7 +10,6 @@ export const RandomEvents = ({userMultiplier, userMoney, user, formatMoney}) => 
 
   const generateEvent = () => {
     const randomNum = Math.floor(Math.random() * 10);
-    console.log(randomNum);
     if (randomNum === 4) {
       const loseOrWin = Math.floor(Math.random() * 4);
       const amount = Math.floor(Math.random() * 1000) * userMultiplier;
